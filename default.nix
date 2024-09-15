@@ -10,9 +10,11 @@
       # emacs
       curl
       sbcl
-      sbclPackages.hunchentoot
-      sbclPackages.plump
-      sbclPackages.cl-who
+      sbclPackages.ironclad
+      sbclPackages.bordeaux-threads
+      sbclPackages.lparallel
+      sbclPackages.cl-dbi
+      sbclPackages.clog
       asdf
       # openssl.out
 
