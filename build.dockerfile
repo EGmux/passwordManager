@@ -12,7 +12,7 @@ RUN sbcl --eval "(ql:quickload :html2clwho)" \
     --load html2clwho.lisp \
     --eval "(sb-ext:save-lisp-and-die \"core\" :toplevel #'html2clwho::main :executable t)"
 
-FROM clfoundation/sbcl:alpine3.14
+FROM clfoundation/sbcl:latest
 
 RUN adduser -D app
 USER app
