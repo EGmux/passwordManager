@@ -14,7 +14,7 @@ RUN sbcl --eval "(ql:quickload :html2clwho)" \
 
 FROM clfoundation/sbcl:latest
 
-RUN adduser -D app
+RUN adduser --disabled-password app
 USER app
 
 COPY --from=builder /root/common-lisp/core .
