@@ -8,9 +8,9 @@ RUN sbcl --non-interactive --load /usr/local/share/common-lisp/source/quicklisp/
     --eval "(quicklisp-quickstart:install)" \
     --eval "(ql-util:without-prompting (ql:add-to-init-file))"
 
-RUN sbcl --eval "(ql:quickload :html2clwho)" \
+RUN sbcl --eval "(ql:quickload :passwordManager)" \
     --load html2clwho.lisp \
-    --eval "(sb-ext:save-lisp-and-die \"core\" :toplevel #'html2clwho::main :executable t)"
+    --eval "(sb-ext:save-lisp-and-die \"core\" :toplevel #'passwordManager::main :executable t)"
 
 FROM clfoundation/sbcl:latest
 
