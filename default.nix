@@ -15,6 +15,10 @@
       sbclPackages.lparallel
       sbclPackages.cl-dbi
       sbclPackages.clog
+      sbclPackages.jzon
+      sbclPackages.log4cl
+      sbclPackages.flexi-streams
+      sbclPackages.cl-strings
       asdf
       # openssl.out
 
