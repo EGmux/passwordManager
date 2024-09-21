@@ -54,7 +54,6 @@
         (format t "Your master key is: ~a~%" (derived-keys k)))
       (format t "Password Store already initialized!~%")))
 
-;; TODO: load must run in O(n) async and 1static method
 (defmethod keychain-load ((k keychain) password representation trustedDataCheck)
   "Given a serialized representation of a Keychain load the Keychain in memory"
   (let ((notquit t)
@@ -91,8 +90,6 @@
                               (setq notquit (progn (setq password nil)(yes-or-no-p "Want to try again?~%")))))
         (format t "Already loaded!~%"))))
 
-
-;; TODO: constructor must run in O(n) async
 (defmethod keychain-dump ((k keychain))
   "Returns an encoding of the hashtable as an encrypted association list serialized in JSON and a SHA-256 digest" 
   (format t "Dumping the password manager entries...~%")
