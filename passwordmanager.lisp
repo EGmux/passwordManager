@@ -111,24 +111,6 @@
           (setf (loaded k) nil)))
       (format t "Already Dumped!~%")))
 
-(defun print-hash-table-readably (hash-table
-                                  &optional
-                                    (stream *standard-output*))
-  "Prints a hash table readably using ALEXANDRIA:ALIST-HASH-TABLE."
-  (let ((test (hash-table-test hash-table))
-        (*print-circle* t)
-        (*print-readably* t))
-    (format stream "#.(ALEXANDRIA:ALIST-HASH-TABLE '(~%")
-    (maphash (lambda (k v) (format stream "   (~S . ~S)~%" k v)) hash-table)
-    (format stream "   ) :TEST '~A~%)" test)
-    hash-table))
-
-(defun padding (value)
-  (let ((missing (- 64  (length value))))
-    (if (plusp missing)
-        (concatenate 'string (str:repeat "0" missing)  value)
-        value)))
-
 (defmethod keychain-set ((k keychain) name value)
   "Insert or update an entry in the Kechain, must be called only after the keychain has being loaded"
   (let* ((hmac (nth 1 (derived-keys k)))
