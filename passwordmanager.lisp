@@ -135,8 +135,8 @@
            (format t "Password store updated~%"))))
 
 (defmethod keychain-get ((k keychain) name)
-  "Returns the password for an entry if found, otherwise nil"
-  (let* ((hmac (nth 1 (derived-keys k)))a
+  "Returns the password for an entry if found, otherwise nil, check for swap attacks, note that we assume the password to never have any space characters"
+  (let* ((hmac (nth 1 (derived-keys k)))
          (master-password (nth 0 (derived-keys k)))
          (build-gcm (nth 2 (derived-keys k)))
          (digest (progn
