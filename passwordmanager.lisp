@@ -36,10 +36,7 @@
     :accessor loaded
     :documentation "Is the keychain loaded?"
     :allocation :instance)))
-;;"static attribute/slot"
-;; TODO: init must run in O(1)  async and static method
-
-(declaim (optimize (speed 0) (space 0) (debug 3)))
+;; (declaim (optimize (speed 0) (space 0) (debug 3)))
 
 (defmethod keychain-init ((k keychain) password)
   (format t "initializing the keychain...~%")
