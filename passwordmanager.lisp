@@ -4,12 +4,11 @@
 (ql:quickload :clog)
 (ql:quickload :lparallel)
 (ql:quickload :ironclad)
-(ql:quickload :crypto-shortcuts)
 (ql:quickload '#:com.inuoe.jzon)
-(ql:quickload "str")
+(ql:quickload :str)
 
 (defpackage :passwordmanager
-  (:use :cl  :ironclad)
+  (:use :cl  :ironclad :com.inuoe.jzon)
   (:export
    #:keychain-init
    #:keychain-loa
