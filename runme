@@ -20,7 +20,7 @@ server() {
 ensure_quicklisp() {
     if ! test -f quicklisp/setup.lisp; then
         curl https://beta.quicklisp.org/quicklisp.lisp > quicklisp.lisp
-        result/bin/sbcl --no-sysinit --no-userinit --load quicklisp.lisp --eval '(quicklisp-quickstart:install :path #P"./quicklisp/")' --eval '(quit)'
+        result/bin/sbcl --no-sysinit --no-userinit --load quicklisp.lisp --eval '(quicklisp-quickstart:install :path #P"./quicklisp/")'  --eval '(quit)'
     fi
     test -f config/sbcl-init.lisp || touch config/sbcl-init.lisp
 }
