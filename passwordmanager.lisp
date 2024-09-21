@@ -158,11 +158,11 @@
                  (tamperedp (if (not (equal expected got )) t nil)))
           (if tamperedp
               (format t "Swap attack happened, expected ~a, got ~a~%" expected got)
-              (format t "Entry found: ~a~%" password)))
+              (format t "Entry found: ~a:~%" password)))
         (format t "Entry not found~%"))))
 
 (defmethod keychain-remove ((k keychain) name)
-  "Remove an entry in the Kechain"
+  "Remove an entry in the Keychain"
   (if (loaded k)
       (let* ((hmac (nth 1 (derived-keys k)))
              (master-password (nth 0 (derived-keys k)))
