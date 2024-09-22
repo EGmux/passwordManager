@@ -1,5 +1,5 @@
 (asdf:defsystem #:passwordmanagerapp
-  :description "A simple password manager written in commonLisp"
+  :description "A simple password manager written in Common Lisp"
   :author "Enzo Bissoli"
   :version "0.0.1"
   :serial t
