@@ -1,14 +1,15 @@
 (load  "quicklisp/setup.lisp")
 ;; (pushnew (uiop:getcwd) ql:*local-project-directories*)
 ;; (ql:register-local-projects)
-(ql:quickload :clog)
-(ql:quickload :lparallel)
-(ql:quickload :ironclad)
-(ql:quickload '#:com.inuoe.jzon)
-(ql:quickload :str)
+                                        ;
+;; (ql:quickload :clog)
+;; (ql:quickload :lparallel)
+;; (ql:quickload :ironclad)
+;; (ql:quickload '#:com.inuoe.jzon)
+;; (ql:quickload :str)
 
 (defpackage :passwordmanager
-  (:use :cl  :ironclad :com.inuoe.jzon :str :lparallel :clog)
+  (:use :cl  :ironclad :com.inuoe.jzon :str)
   (:export
    #:keychain
    #:keychain-init
@@ -19,12 +20,6 @@
    #:keychain-load))
 
 (in-package :passwordmanager)
-
-(ql:quickload :clog)
-(ql:quickload :lparallel)
-(ql:quickload :ironclad)
-(ql:quickload '#:com.inuoe.jzon)
-(ql:quickload :str)
 
 (defclass keychain ()
   ((#:entries
@@ -43,6 +38,8 @@
     :documentation "Is the keychain loaded?"
     :allocation :instance)))
 ;; (declaim (optimize (speed 0) (space 0) (debug 3)))
+
+(defparameter *keychain* nil)
 
 (defmethod keychain-init ((k keychain) password)
   (format t "initializing the keychain...~%")
@@ -101,23 +98,23 @@
         (progn (format nil"Already loaded!~%")
                (format t "logged")))))
 
-(defmethod _keychain-dump ((k keychain))
-  "Returns an encoding of the hashtable as an encrypted association list serialized in JSON and a SHA-256 digest" 
-  (format t "Dumping the password manager entries...~%")
-  (if (loaded k)
-      (let* ((hash-table (entries k))
-             (master-password (nth 0 (derived-keys k)))
-             (hmac (nth 1 (derived-keys k)))
-             (dumped-hash-table (com.inuoe.jzon:stringify hash-table)) 
-             (digest-hash-table (progn
-                                  (reinitialize-instance hmac :key master-password)
-                                  (update-mac hmac (ascii-string-to-byte-array dumped-hash-table))
-                                  (flexi-streams:octets-to-string (produce-mac hmac)))))
-        (progn
-          (setf (entries k) (list dumped-hash-table digest-hash-table))
-          (format t "Password store dumped!~%")
-          (setf (loaded k) nil)))
-      (format t "Already Dumped!~%")))
+;; (defmethod _keychain-dump ((k keychain))
+;;   "Returns an encoding of the hashtable as an encrypted association list serialized in JSON and a SHA-256 digest" 
+;;   (format t "Dumping the password manager entries...~%")
+;;   (if (loaded k)
+;;       (let* ((hash-table (entries k))
+;;              (master-password (nth 0 (derived-keys k)))
+;;              (hmac (nth 1 (derived-keys k)))
+;;              (dumped-hash-table (com.inuoe.jzon:stringify hash-table)) 
+;;              (digest-hash-table (progn
+;;                                   (reinitialize-instance hmac :key master-password)
+;;                                   (update-mac hmac (ascii-string-to-byte-array dumped-hash-table))
+;;                                   (flexi-streams:octets-to-string (produce-mac hmac)))))
+;;         (progn
+;;           (setf (entries k) (list dumped-hash-table digest-hash-table))
+;;           (format t "Password store dumped!~%")
+;;           (setf (loaded k) nil)))
+;;       (format t "Already Dumped!~%")))
 
 (defmethod _keychain-set ((k keychain) name value)
   "Insert or update an entry in the Kechain, must be called only after the keychain has being loaded"
@@ -198,7 +195,9 @@
   (_keychain-load *keychain* password (entries *keychain*) trusteddatacheck))
 
 (defun keychain-dump ()
-  (_keychain-dump *keychain*))
+  ;;   (_keychain-dump *keychain*)
+  ())
+
 
 (defun keychain-set (name value)
   (_keychain-set *keychain* name  value))
@@ -210,4 +209,3 @@
   (_keychain-remove *keychain* name))
 
 (keychain-dump)
-

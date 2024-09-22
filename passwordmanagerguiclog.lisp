@@ -1,19 +1,19 @@
 ;; graphical user interface for password manager powered by CLOG
 
-;; (load "quicklisp/setup.lisp")
+(load "quicklisp/setup.lisp")
 ;; (pushnew (uiop:getcwd) ql:*local-project-directories*)
 
 
 (defpackage :passwordmanagergui
-  (:use :cl :clog :passwordmanager))
+  (:use :cl :clog :clog-user :passwordmanager))
 
 (in-package :passwordmanagergui)
-(ql:register-local-projects)
-(ql:quickload :clog)
-(ql:quickload :passwordmanager)
-(clog:clog-repl)
+;; (ql:register-local-projects)
+;; (ql:quickload :clog)
+;; (ql:quickload :passwordmanager)
+;; (clog:clog-repl)
 
-(in-package clog-user)
+;; (in-package clog-user)j
 
 (defun on-new-window (body)
   (set-html-on-close body "Connection Lost")
@@ -104,7 +104,6 @@
                     (setf (hiddenp dump-form) t)
                     (setf (css-class-name backdrop) "w3-container w3-red")
                     (passwordmanager:keychain-dump)))
-    ;; (setf (text-value ok-button-load) "Dumped, Click here to Load")))
     (set-on-click ok-button-remove
                   (lambda (obj)
                     (declare (ignore obj))
@@ -211,11 +210,13 @@
                             (setf (text-value ok-button-remove-send) "Sent")
                             (setf (text-value caption-remove-answer) (passwordmanager:keychain-remove domain))
                             (setf (text-value ok-button-remove-send) "Send"))
-                          (setf (text-value caption-remove-answer) "Missing arguments")))))))
+                          (setf (text-value caption-remove-answer) "Missing arguments"))))))
+  (run body))
 
 
-(run body)
+
 
 (defun main ()
   "Starts the application"
-  (initialize #'on-new-window))
+  (initialize #'on-new-window :port 4040)
+  (sleep most-positive-fixnum))
