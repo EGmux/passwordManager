@@ -98,23 +98,23 @@
         (progn (format nil"Already loaded!~%")
                (format t "logged")))))
 
-;; (defmethod _keychain-dump ((k keychain))
-;;   "Returns an encoding of the hashtable as an encrypted association list serialized in JSON and a SHA-256 digest" 
-;;   (format t "Dumping the password manager entries...~%")
-;;   (if (loaded k)
-;;       (let* ((hash-table (entries k))
-;;              (master-password (nth 0 (derived-keys k)))
-;;              (hmac (nth 1 (derived-keys k)))
-;;              (dumped-hash-table (com.inuoe.jzon:stringify hash-table)) 
-;;              (digest-hash-table (progn
-;;                                   (reinitialize-instance hmac :key master-password)
-;;                                   (update-mac hmac (ascii-string-to-byte-array dumped-hash-table))
-;;                                   (flexi-streams:octets-to-string (produce-mac hmac)))))
-;;         (progn
-;;           (setf (entries k) (list dumped-hash-table digest-hash-table))
-;;           (format t "Password store dumped!~%")
-;;           (setf (loaded k) nil)))
-;;       (format t "Already Dumped!~%")))
+(defmethod _keychain-dump ((k keychain))
+  "Returns an encoding of the hashtable as an encrypted association list serialized in JSON and a SHA-256 digest" 
+  (format t "Dumping the password manager entries...~%")
+  (if (loaded k)
+      (let* ((hash-table (entries k))
+             (master-password (nth 0 (derived-keys k)))
+             (hmac (nth 1 (derived-keys k)))
+             (dumped-hash-table (com.inuoe.jzon:stringify hash-table)) 
+             (digest-hash-table (progn
+                                  (reinitialize-instance hmac :key master-password)
+                                  (update-mac hmac (ascii-string-to-byte-array dumped-hash-table))
+                                  (flexi-streams:octets-to-string (produce-mac hmac)))))
+        (progn
+          (setf (entries k) (list dumped-hash-table digest-hash-table))
+          (format t "Password store dumped!~%")
+          (setf (loaded k) nil)))
+      (format t "Already Dumped!~%")))
 
 (defmethod _keychain-set ((k keychain) name value)
   "Insert or update an entry in the Kechain, must be called only after the keychain has being loaded"
@@ -195,10 +195,8 @@
   (_keychain-load *keychain* password (entries *keychain*) trusteddatacheck))
 
 (defun keychain-dump ()
-  ;;   (_keychain-dump *keychain*)
-  ())
-
-
+  (_keychain-dump *keychain*))
+ 
 (defun keychain-set (name value)
   (_keychain-set *keychain* name  value))
 
@@ -208,4 +206,4 @@
 (defun keychain-remove (name)
   (_keychain-remove *keychain* name))
 
-(keychain-dump)
+
