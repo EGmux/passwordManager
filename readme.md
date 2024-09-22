@@ -10,7 +10,7 @@ docker build -f build.dockerfile -t passwordmanager .
 
 ### Expect to take between 1-2min if you have a modern machine
 
-### How to run
+# How to run
 
 ``` bash
 docker container run -i -p 4040:4040 --rm -t passwordmanager
