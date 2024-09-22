@@ -20,6 +20,12 @@
 
 (in-package :passwordmanager)
 
+(ql:quickload :clog)
+(ql:quickload :lparallel)
+(ql:quickload :ironclad)
+(ql:quickload '#:com.inuoe.jzon)
+(ql:quickload :str)
+
 (defclass keychain ()
   ((#:entries
     :initform nil

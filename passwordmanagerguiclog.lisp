@@ -1,15 +1,16 @@
 ;; graphical user interface for password manager powered by CLOG
 
-(load "quicklisp/setup.lisp")
-(pushnew (uiop:getcwd) ql:*local-project-directories*)
+;; (load "quicklisp/setup.lisp")
+;; (pushnew (uiop:getcwd) ql:*local-project-directories*)
+
+
+(defpackage :passwordmanagergui
+  (:use :cl :clog :passwordmanager))
+
+(in-package :passwordmanagergui)
 (ql:register-local-projects)
 (ql:quickload :clog)
 (ql:quickload :passwordmanager)
-(defpackage :passwordmanagergui
-  (:use :cl :clog)
-  (:export))
-
-(in-package :passwordmanagergui)
 (clog:clog-repl)
 
 (in-package clog-user)
