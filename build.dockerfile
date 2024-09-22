@@ -3,23 +3,27 @@ FROM  clfoundation/sbcl:latest as builder
 COPY . /root/common-lisp/
 WORKDIR /root/common-lisp/
 
+
 ENV QUICKLISP_ADD_TO_INIT_FILE=true
-RUN sbcl --non-interactive --load /usr/local/share/common-lisp/source/quicklisp/quicklisp.lisp \
+RUN sbcl --non-interactive --load quicklisp.lisp \
     --eval "(quicklisp-quickstart:install)" \
     --eval "(ql-util:without-prompting (ql:add-to-init-file))"
+    
+RUN sbcl --non-interactive --eval "(ql:quickload :passwordmanagerapp)" \
+       # --load passwordmanager.lisp \
+       # --load passwordmanagerguiclog.lisp \ 
+       --eval "(sb-ext:save-lisp-and-die \"core\" :toplevel #'passwordmanagergui::main :executable t)"
 
-RUN sbcl --eval "(ql:quickload :passwordManager)" \
-    --load html2clwho.lisp \
-    --eval "(sb-ext:save-lisp-and-die \"core\" :toplevel #'passwordManager::main :executable t)"
+# FROM clfoundation/sbcl:latest
 
-FROM clfoundation/sbcl:latest
 
 RUN adduser --disabled-password app
-USER app
+     
+# COPY --from=builder /root/common-lisp/ .
 
-COPY --from=builder /root/common-lisp/core .
+RUN chmod 777 -R /root/common-lisp/quicklisp/dists/quicklisp/software/clog-20231021-git/static-files
 
-EXPOSE 3333
+EXPOSE 4040
 
 ENTRYPOINT ["sbcl",  "--core", "core"]
 
