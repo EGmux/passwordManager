@@ -5,7 +5,7 @@ WORKDIR /root/common-lisp/
 
 
 ENV QUICKLISP_ADD_TO_INIT_FILE=true
-RUN sbcl --non-interactive --load quicklisp.lisp \
+RUN sbcl --non-interactive --load /usr/local/share/common-lisp/source/quicklisp/quicklisp.lisp \
     --eval "(quicklisp-quickstart:install)" \
     --eval "(ql-util:without-prompting (ql:add-to-init-file))"
     
