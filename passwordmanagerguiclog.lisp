@@ -1,11 +1,11 @@
 ;; graphical user interface for password manager powered by CLOG
 
-(load "quicklisp/setup.lisp")
+;; (load "quicklisp/setup.lisp")
 ;; (pushnew (uiop:getcwd) ql:*local-project-directories*)
 
 
 (defpackage :passwordmanagergui
-  (:use :cl :clog :clog-user :passwordmanager))
+            (:use :cl :clog :clog-user :passwordmanager))
 
 (in-package :passwordmanagergui)
 ;; (ql:register-local-projects)
@@ -165,7 +165,7 @@
                                           ((equal answer "tampered")
                                            "Store has been tampered!"))))
                             (setf (text-value ok-button-load-send) "Send"))
-                          (setf (text-value caption-load-answer) "Missing arguments")))))
+                        (setf (text-value caption-load-answer) "Missing arguments")))))
     (set-on-click ok-button-init-send
                   (lambda (obj)
                     (declare (ignore obj))
@@ -179,7 +179,7 @@
                             (setf (hiddenp dump-form) nil)
                             (setf (css-class-name backdrop) "w3-container w3-green")
                             (setf (text-value ok-button-get-send) "Send"))
-                          (setf (text-value caption-add-answer) "Missing arguments")))))
+                        (setf (text-value caption-add-answer) "Missing arguments")))))
     (set-on-click ok-button-get-send
                   (lambda (obj)
                     (declare (ignore obj))
@@ -189,7 +189,7 @@
                             (setf (text-value ok-button-get-send) "Sent")
                             (setf (text-value caption-get-answer) (passwordmanager:keychain-get domain))
                             (setf (text-value ok-button-get-send) "Send"))
-                          (setf (text-value caption-get-answer) "Missing arguments")))))
+                        (setf (text-value caption-get-answer) "Missing arguments")))))
     (set-on-click ok-button-add-send
                   (lambda (obj)
                     (declare (ignore obj))
@@ -200,7 +200,7 @@
                             (setf (text-value ok-button-add-send) "Sent")
                             (setf (text-value caption-add-answer) (passwordmanager:keychain-set domain password))
                             (setf (text-value ok-button-add-send) "Send"))
-                          (setf (text-value caption-add-answer) "Missing arguments")))))
+                        (setf (text-value caption-add-answer) "Missing arguments")))))
     (set-on-click ok-button-remove-send
                   (lambda (obj)
                     (declare (ignore obj))
@@ -210,7 +210,7 @@
                             (setf (text-value ok-button-remove-send) "Sent")
                             (setf (text-value caption-remove-answer) (passwordmanager:keychain-remove domain))
                             (setf (text-value ok-button-remove-send) "Send"))
-                          (setf (text-value caption-remove-answer) "Missing arguments"))))))
+                        (setf (text-value caption-remove-answer) "Missing arguments"))))))
   (run body))
 
 
