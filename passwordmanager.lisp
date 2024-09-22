@@ -8,15 +8,15 @@
 (ql:quickload :str)
 
 (defpackage :passwordmanager
-  (:use :cl  :ironclad :com.inuoe.jzon :str)
+  (:use :cl  :ironclad :com.inuoe.jzon :str :lparallel :clog)
   (:export
+   #:keychain
    #:keychain-init
-   #:keychain-loa
-   #:keychain-dump
-   #:keychain-set
-   #:keychain-get
    #:keychain-remove
-   #:keychain))
+   #:keychain-get
+   #:keychain-set
+   #:keychain-dump
+   #:keychain-load))
 
 (in-package :passwordmanager)
 
