@@ -2,7 +2,7 @@
 
 # How to build
 
-## **Make sure to have Docker installed** and run the following snippet of code in the source code directory.
+## Make sure to have Docker installed and run the following snippet of code in the cloned project directory
 
 ``` bash
 docker build -f build.dockerfile -t passwordmanager .
