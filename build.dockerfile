@@ -3,9 +3,10 @@ FROM  clfoundation/sbcl:latest as builder
 COPY . /root/common-lisp/
 WORKDIR /root/common-lisp/
 
+RUN cp /usr/local/share/common-lisp/source/quicklisp/quicklisp.lisp /root/common-lisp/
 
 ENV QUICKLISP_ADD_TO_INIT_FILE=true
-RUN sbcl --non-interactive --load quicklisp.lisp \
+RUN sbcl --non-interactive --load /root/common-lisp/quicklisp.lisp \
     --eval "(quicklisp-quickstart:install)" \
     --eval "(ql-util:without-prompting (ql:add-to-init-file))"
     
@@ -21,7 +22,7 @@ RUN adduser --disabled-password app
      
 # COPY --from=builder /root/common-lisp/ .
 
-RUN chmod 777 -R /root/common-lisp/quicklisp/dists/quicklisp/software/clog-20231021-git/static-files
+# RUN chmod 777 -R /root/common-lisp/quicklisp/dists/quicklisp/software/clog-20231021-git/static-files
 
 EXPOSE 4040
 
